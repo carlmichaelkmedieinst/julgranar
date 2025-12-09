@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-K3QFJMRZ');</script>
+<!-- End Google Tag Manager -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Julgranshämtning – Vi hämtar din gran hemma hos dig</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K3QFJMRZ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo">Julgranshämtning</div>
+      <nav class="main-nav">
+        <a href="#how-it-works">Så funkar det</a>
+        <a href="#pricing">Pris</a>
+        <a href="#booking">Boka</a>
+      </nav>
+    </div>
+  </header>
+
+    <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <h1>Vi hämtar din julgran – enkelt, miljövänligt och i tid.</h1>
+          <p>
+            Slipp barr i bilen och stress efter helgerna. Vi hämtar din gran utanför dörren
+            och ser till att den tas om hand på ett hållbart sätt.
+          </p>
+          <button id="cta-button" class="btn-primary">
+            Boka hämtning
+          </button>
+          <p class="hero-note">Begränsat antal platser per dag.</p>
+        </div>
+        <div class="hero-card">
+          <h2>Snabbfakta</h2>
+          <ul>
+            <li>Hämtning vid din port/bostad</li>
+            <li>Fast pris per gran</li>
+            <li>Återvinning ingår</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SÅ FUNKAR DET -->
+    <section id="how-it-works" class="section">
+      <div class="container">
+        <h2>Så funkar det</h2>
+        <div class="steps">
+          <div class="step">
+            <span class="step-number">1</span>
+            <h3>Boka din tid</h3>
+            <p>Fyll i formuläret med adress, datum och kontaktuppgifter.</p>
+          </div>
+          <div class="step">
+            <span class="step-number">2</span>
+            <h3>Ställ ut granen</h3>
+            <p>Ställ granen vid överenskommen plats utanför din bostad.</p>
+          </div>
+          <div class="step">
+            <span class="step-number">3</span>
+            <h3>Vi hämtar och återvinner</h3>
+            <p>Vi hämtar granen och ser till att den återvinns på rätt sätt.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRIS -->
+    <section id="pricing" class="section section-alt">
+      <div class="container">
+        <h2>Enkelt pris</h2>
+        <div class="price-card">
+          <h3>Julgranshämtning</h3>
+          <p class="price">299 kr</p>
+          <p class="price-note">per gran, inklusive återvinning</p>
+          <ul class="price-list">
+            <li>Hämtning vid port/bostad</li>
+            <li>Planerad dag och tidsintervall</li>
+            <li>Ingen bindningstid eller dolda avgifter</li>
+          </ul>
+          <button class="btn-secondary" id="pricing-cta">
+            Boka nu
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOOKING FORM -->
+    <section id="booking" class="section">
+      <div class="container booking-container">
+        <div class="booking-text">
+          <h2>Boka hämtning av din julgran</h2>
+          <p>
+            Fyll i dina uppgifter så återkommer vi med bekräftelse via e-post.
+          </p>
+        </div>
+        <form id="booking-form" class="booking-form">
+          <div class="form-group">
+            <label for="name">Namn *</label>
+            <input type="text" id="name" name="name" required />
+          </div>
+
+          <div class="form-group">
+            <label for="address">Adress *</label>
+            <input type="text" id="address" name="address" required />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="zipcode">Postnummer *</label>
+              <input type="text" id="zipcode" name="zipcode" required />
+            </div>
+            <div class="form-group">
+              <label for="city">Stad *</label>
+              <input type="text" id="city" name="city" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="date">Önskat datum *</label>
+            <input type="date" id="date" name="date" required />
+          </div>
+
+          <div class="form-group">
+            <label for="email">E-post *</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+
+          <div class="form-group">
+            <label for="notes">Övrig info (valfritt)</label>
+            <textarea id="notes" name="notes" rows="3" placeholder="T.ex. portkod, särskilda instruktioner"></textarea>
+          </div>
+
+          <div class="form-group checkbox-group">
+            <input type="checkbox" id="terms" name="terms" />
+            <label for="terms">Jag godkänner villkoren *</label>
+          </div>
+
+          <button type="submit" class="btn-primary full-width">
+            Skicka bokningsförfrågan
+          </button>
+
+          <p id="form-message" class="form-message" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Julgranshämtning. Alla rättigheter reserverade.</p>
+      <p class="footer-sub">Tjänstexempel för kurs – ej en riktig tjänst.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
