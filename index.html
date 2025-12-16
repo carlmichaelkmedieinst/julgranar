@@ -8,17 +8,50 @@
   <title>Julgranshämtning – Vi hämtar din gran hemma hos dig</title>
 
   <!-- GA4 – ENDA ANALYTICS-SNIPPETEN -->
+<!-- GA4 FAILSAFE -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-FGKCNKH1S1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
+  function gtag(){ dataLayer.push(arguments); }
+
   gtag('js', new Date());
 
-  // 🔒 Tvinga GA-start även om querystring finns
-  gtag('config', 'G-FGKCNKH1S1', {
-    send_page_view: true
+  // Read UTMs from the landing URL
+  const p = new URLSearchParams(window.location.search);
+  const utm_source   = p.get('utm_source');
+  const utm_medium   = p.get('utm_medium');
+  const utm_campaign = p.get('utm_campaign');
+  const utm_term     = p.get('utm_term');
+  const utm_content  = p.get('utm_content');
+  const utm_id       = p.get('utm_id');
+
+  // 1) Configure GA but do NOT auto page_view (we send a guaranteed one below)
+  gtag('config', 'G-FGKCNKH1S1', { send_page_view: false });
+
+  // 2) Force a page_view + forced campaign attribution
+  // (This is the key “failsafe”.)
+  const pvParams = {
+    page_location: window.location.href,
+    page_path: window.location.pathname + window.location.search
+  };
+
+  if (utm_source)   pvParams.campaign_source = utm_source;
+  if (utm_medium)   pvParams.campaign_medium = utm_medium;
+  if (utm_campaign) pvParams.campaign_name   = utm_campaign;
+  if (utm_term)     pvParams.campaign_term   = utm_term;
+  if (utm_content)  pvParams.campaign_content= utm_content;
+  if (utm_id)       pvParams.campaign_id     = utm_id;
+
+  gtag('event', 'page_view', pvParams);
+
+  // 3) Also send a debug/verification event you can see under Events immediately
+  // even if Acquisition takes time.
+  gtag('event', 'utm_landing', {
+    utm_source, utm_medium, utm_campaign, utm_term, utm_content, utm_id,
+    page_location: window.location.href
   });
 </script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Julgranshämtning – Vi hämtar din gran hemma hos dig</title>
