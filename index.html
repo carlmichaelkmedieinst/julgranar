@@ -8,6 +8,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-K3QFJMRZ');</script>
 <!-- End Google Tag Manager -->
+
+<!-- GA4 – BYT G-XXXXXXXXXX MOT DITT EGET ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FGKCNKH1S1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-FGKCNKH1S1');
+</script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Julgranshämtning – Vi hämtar din gran hemma hos dig</title>
@@ -25,6 +35,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <a href="#how-it-works">Så funkar det</a>
         <a href="#pricing">Pris</a>
         <a href="#booking">Boka</a>
+        <a href="#" id="gran-info-link">Vad gör vi med granen?</a>
       </nav>
     </div>
   </header>
@@ -34,7 +45,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <section class="hero">
       <div class="container hero-inner">
         <div class="hero-text">
-          <h1>Vi hämtar din julgran – enkelt, miljövänligt och i tid.</h1>
+          <h1>Vi hämtar din julgran hemma hos dig</h1>
           <p>
             Slipp barr i bilen och stress efter helgerna. Vi hämtar din gran utanför dörren
             och ser till att den tas om hand på ett hållbart sätt.
@@ -142,7 +153,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
           <div class="form-group">
             <label for="notes">Övrig info (valfritt)</label>
-            <textarea id="notes" name="notes" rows="3" placeholder="T.ex. portkod, särskilda instruktioner"></textarea>
+            <textarea
+              id="notes"
+              name="notes"
+              rows="3"
+              placeholder="T.ex. portkod, särskilda instruktioner"
+            ></textarea>
           </div>
 
           <div class="form-group checkbox-group">

@@ -1,4 +1,4 @@
-// Enkel JS för scroll, formulärmeddelande och årtal
+// Enkel JS för scroll, formulärmeddelande, årtal och GA4-events
 
 document.addEventListener("DOMContentLoaded", function () {
   const ctaButton = document.getElementById("cta-button");
@@ -7,10 +7,20 @@ document.addEventListener("DOMContentLoaded", function () {
   const bookingForm = document.getElementById("booking-form");
   const formMessage = document.getElementById("form-message");
   const yearSpan = document.getElementById("year");
+  const granInfoLink = document.getElementById("gran-info-link");
+
+  // Wrapper runt gtag så sidan inte kraschar om GA saknas
+  function trackEvent(name, params) {
+    if (typeof gtag === "function") {
+      gtag("event", name, params || {});
+    }
+  }
 
   // Sätt aktuellt år i footern
-  const currentYear = new Date().getFullYear();
-  yearSpan.textContent = currentYear;
+  if (yearSpan) {
+    const currentYear = new Date().getFullYear();
+    yearSpan.textContent = currentYear;
+  }
 
   // Scrolla ner till bokningsdelen
   function scrollToBooking() {
@@ -19,11 +29,30 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   if (ctaButton) {
-    ctaButton.addEventListener("click", scrollToBooking);
+    ctaButton.addEventListener("click", function () {
+      scrollToBooking();
+      // GA4: booking_start från hero
+      trackEvent("booking_start", { cta_location: "hero" });
+    });
   }
 
   if (pricingCta) {
-    pricingCta.addEventListener("click", scrollToBooking);
+    pricingCta.addEventListener("click", function () {
+      scrollToBooking();
+      // GA4: booking_start från pris-kortet
+      trackEvent("booking_start", { cta_location: "pricing" });
+    });
+  }
+
+  if (granInfoLink) {
+    granInfoLink.addEventListener("click", function (event) {
+      event.preventDefault();
+      alert(
+        "Exempel: Granen transporteras till en återvinningsanläggning, flisas och används som biobränsle eller kompost. (Skoluppgift – ingen riktig hantering sker.)"
+      );
+      // GA4: klick på info-länken
+      trackEvent("gran_info_clicked");
+    });
   }
 
   // Fånga formuläret (förenklad fejk-submit för kurs)
@@ -41,7 +70,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // enkel validering
       if (!name || !address || !zipcode || !city || !date || !email) {
-        formMessage.textContent = "Fyll i alla obligatoriska fält (*) innan du skickar.";
+        formMessage.textContent =
+          "Fyll i alla obligatoriska fält (*) innan du skickar.";
         formMessage.style.color = "#f25b5b";
         return;
       }
@@ -52,9 +82,19 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
+      // GA4: huvudkonvertering
+      trackEvent("booking_complete", {
+        service_type: "standard",
+        zipcode: zipcode,
+        city: city,
+        pickup_date: date,
+        price: 299,
+      });
+
       // Här hade du i verkligheten skickat till server / API.
       // För kurs/vibe-läge: visa bara ett "tack"-meddelande.
-      formMessage.textContent = "Tack! Din bokningsförfrågan är skickad. (Fejk för demo)";
+      formMessage.textContent =
+        "Tack! Din bokningsförfrågan är skickad. (Fejk för demo)";
       formMessage.style.color = "#1fd38a";
 
       // Töm formuläret lite snyggt
