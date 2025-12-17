@@ -1,7 +1,5 @@
 // Enkel JS för scroll, formulärmeddelande, årtal och GA4-events
 
-const SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbz2C12RGtULRbjQ0nSz7Oq9b4UqqzXgwuaBeGorcWyZ2bNbQ8NsjhsfptarRSf5fwDViQ/exec";
-
 document.addEventListener("DOMContentLoaded", function () {
   const ctaButton = document.getElementById("cta-button");
   const pricingCta = document.getElementById("pricing-cta");
@@ -57,102 +55,55 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-// Fånga formuläret (förenklad fejk-submit för kurs)
-if (bookingForm) {
-  bookingForm.addEventListener("submit", function (event) {
-    event.preventDefault(); // stoppar riktig submit
+  // Fånga formuläret (förenklad fejk-submit för kurs)
+  if (bookingForm) {
+    bookingForm.addEventListener("submit", function (event) {
+      event.preventDefault(); // stoppar riktig submit
 
-    const name = document.getElementById("name").value.trim();
-    const address = document.getElementById("address").value.trim();
-    const zipcode = document.getElementById("zipcode").value.trim();
-    const city = document.getElementById("city").value.trim();
-    const date = document.getElementById("date").value;
-    const email = document.getElementById("email").value.trim();
-    const terms = document.getElementById("terms").checked;
+      const name = document.getElementById("name").value.trim();
+      const address = document.getElementById("address").value.trim();
+      const zipcode = document.getElementById("zipcode").value.trim();
+      const city = document.getElementById("city").value.trim();
+      const date = document.getElementById("date").value;
+      const email = document.getElementById("email").value.trim();
+      const terms = document.getElementById("terms").checked;
 
-    // enkel validering
-    if (!name || !address || !zipcode || !city || !date || !email) {
-      formMessage.textContent =
-        "Fyll i alla obligatoriska fält (*) innan du skickar.";
-      formMessage.style.color = "#f25b5b";
-      return;
-    }
-
-    if (!terms) {
-      formMessage.textContent = "Du måste godkänna villkoren.";
-      formMessage.style.color = "#f25b5b";
-      return;
-    }
-
-    // UI: visa direkt att något händer
-    formMessage.textContent = "Skickar bokningsförfrågan...";
-    formMessage.style.color = "#ffffff";
-
-    // Payload till Google Sheet-backend (PII stannar där)
-    const payload = {
-      address: address,
-      zipcode: zipcode,
-      city: city,
-      // valfritt: för analys i sheet (kan tas bort)
-      pickup_date: date,
-      price: 299
-    };
-
-    // 1) Skicka till Sheets (Apps Script Web App) för returning-check
-    fetch(SHEET_WEBAPP_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    })
-      .then((r) => r.json())
-      .then((data) => {
-        const isReturning = !!data.returning;
-
-        // 2) GA4: huvudkonvertering (som du redan har)
-        trackEvent("booking_complete", {
-          service_type: "standard",
-          zipcode: zipcode,
-          city: city,
-          pickup_date: date,
-          price: 299,
-        });
-
-        // 3) GA4: PII-fritt returning-event
-        trackEvent("returning_booking", {
-          returning: isReturning ? "yes" : "no"
-        });
-
-        // 4) UI-feedback (för skol-demo)
-        formMessage.textContent = isReturning
-          ? "Tack! Din bokningsförfrågan är skickad. (Demo: vi ser att detta verkar vara en återkommande adress från förra året.)"
-          : "Tack! Din bokningsförfrågan är skickad. (Fejk för demo)";
-        formMessage.style.color = "#1fd38a";
-
-        bookingForm.reset();
-
-        setTimeout(() => {
-          formMessage.textContent = "";
-        }, 6000);
-      })
-      .catch(() => {
-        // Fallback: om Sheets-backenden failar, logga ändå booking_complete
-        trackEvent("booking_complete", {
-          service_type: "standard",
-          zipcode: zipcode,
-          city: city,
-          pickup_date: date,
-          price: 299,
-        });
-
+      // enkel validering
+      if (!name || !address || !zipcode || !city || !date || !email) {
         formMessage.textContent =
-          "Tack! Din bokningsförfrågan är skickad. (Demo – kunde inte verifiera återkommande adress just nu)";
-        formMessage.style.color = "#1fd38a";
+          "Fyll i alla obligatoriska fält (*) innan du skickar.";
+        formMessage.style.color = "#f25b5b";
+        return;
+      }
 
-        bookingForm.reset();
+      if (!terms) {
+        formMessage.textContent = "Du måste godkänna villkoren.";
+        formMessage.style.color = "#f25b5b";
+        return;
+      }
 
-        setTimeout(() => {
-          formMessage.textContent = "";
-        }, 6000);
+      // GA4: huvudkonvertering
+      trackEvent("booking_complete", {
+        service_type: "standard",
+        zipcode: zipcode,
+        city: city,
+        pickup_date: date,
+        price: 299,
       });
-  });
-}
+
+      // Här hade du i verkligheten skickat till server / API.
+      // För kurs/vibe-läge: visa bara ett "tack"-meddelande.
+      formMessage.textContent =
+        "Tack! Din bokningsförfrågan är skickad. (Fejk för demo)";
+      formMessage.style.color = "#1fd38a";
+
+      // Töm formuläret lite snyggt
+      bookingForm.reset();
+
+      // Ta bort meddelandet efter en stund (frivilligt)
+      setTimeout(() => {
+        formMessage.textContent = "";
+      }, 6000);
+    });
+  }
+});
